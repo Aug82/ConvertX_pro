@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConvertX Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#FF4EF2" />
+  <link rel="apple-touch-icon" href="assets/icons/CxP_Logo_192x192.png" />
+</head>
+<body>
+  <header class="glass header-flex" role="banner">
+    <div class="left-header">
+      <img src="assets/icons/CxP_Logo_192x192.png" alt="ConvertX Pro Logo" class="logo-icon" />
+      <h1 class="logo">ConvertX Pro</h1>
+    </div>
+    <div class="header-icons">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle Theme">
+        <img src="assets/icons/moon.png" alt="Theme Toggle Icon" class="theme-icon" />
+      </button>
+      <button id="menuToggle" class="icon-btn" aria-label="Open Menu">
+        <img src="assets/icons/header.header.png" alt="Menu Icon" class="menu-icon" />
+      </button>
+    </div>
+    <nav class="menu-dropdown" id="menuDropdown" aria-label="Main Navigation">
+      <ul>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" id="installPWA">Install App</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main role="main">
+    <section class="hero glass">
+      <h2>Convert Anything to Anything</h2>
+      <p>PDFs, Images, and more — fast and free!</p>
+      <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" aria-label="Choose a file to convert" />
+      <button class="neon-btn" id="convertBtn">Start Converting</button>
+    </section>
+
+    <section class="features" id="tools">
+      <h3>Available Tools</h3>
+      <div class="grid">
+        <a href="tools/pdf-to-img.html" class="card glass">PDF to Image</a>
+        <a href="tools/img-to-pdf.html" class="card glass">Image to PDF</a>
+        <a href="tools/color-changer.html" class="card glass">Text Color Changer</a>
+        <a href="tools/img-to-img.html" class="card glass">Image Format Converter</a>
+        <div class="card glass disabled" aria-disabled="true">Coming Soon: Merge PDFs</div>
+        <div class="card glass disabled" aria-disabled="true">Coming Soon: Compress PDF</div>
+      </div>
+    </section>
+
+    <section class="about glass" id="about">
+      <h3>About ConvertX Pro</h3>
+      <p>ConvertX Pro is your go-to tool for quick, seamless file conversion — no ads, no sign-ups, just results.</p>
+    </section>
+
+    <footer id="contact">
+      <p>Created with passion by ConvertX Devs. Contact us at <a href="mailto:support@convertxpro.com">support@convertxpro.com</a></p>
+    </footer>
+  </main>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const convertBtn = document.getElementById("convertBtn");
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = themeToggle.querySelector("img");
+    const menuToggle = document.getElementById("menuToggle");
+    const menuDropdown = document.getElementById("menuDropdown");
+    const installBtn = document.getElementById("installPWA");
+    const body = document.body;
+
+    convertBtn.addEventListener("click", () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please choose a file first!");
+        return;
+      }
+      alert(`Ready to convert: ${file.name}`);
+    });
+
+    function updateThemeIcon() {
+      themeIcon.src = body.classList.contains("dark-mode")
+        ? "assets/icons/sun.png"
+        : "assets/icons/moon.png";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark-mode");
+      localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+      updateThemeIcon();
+    });
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      body.classList.add("dark-mode");
+    }
+    updateThemeIcon();
+
+    menuToggle.addEventListener("click", () => {
+      menuDropdown.classList.toggle("show");
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(() => console.log("Service Worker Registered"))
+          .catch(err => console.error("Service Worker Failed", err));
+      });
+    }
+
+    let deferredPrompt;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = "block";
+    });
+
+    installBtn.addEventListener("click", async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User ${outcome === "accepted" ? "accepted" : "dismissed"} the A2HS prompt`);
+        deferredPrompt = null;
+      } else {
+        alert("Install prompt not available.");
+      }
+    });
+  </script>
+</body>
+</html>

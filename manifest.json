@@ -1,0 +1,20 @@
+{
+  "name": "ConvertX Pro",
+  "short_name": "ConvertX",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF4EF2",
+  "icons": [
+    {
+      "src": "/assets/icons/CxP_Logo_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/CxP_Logo_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

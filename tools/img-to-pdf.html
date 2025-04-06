@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image to PDF | ConvertX Pro</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <h1>Image to PDF</h1>
+    <a href="../index.html" class="neon-btn">Back Home</a>
+  </header>
+
+  <main style="text-align:center; padding: 40px 20px;">
+    <input type="file" id="imageFiles" accept="image/*" multiple />
+    <button class="neon-btn" onclick="convertImagesToPDF()">Convert to PDF</button>
+    <div id="output" style="margin-top: 30px;"></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="img-to-pdf.js"></script>
+</body>
+</html>

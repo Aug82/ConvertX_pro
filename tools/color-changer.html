@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Changer | ConvertX Pro</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <h1>PDF Color Changer</h1>
+    <a href="../index.html" class="neon-btn">Back Home</a>
+  </header>
+
+  <main style="text-align:center; padding: 20px;">
+    <input type="file" id="pdfFile" accept="application/pdf" /><br><br>
+    <label>Text Color: <input type="color" id="textColor" value="#000000" /></label><br><br>
+    <label>Background: <input type="color" id="bgColor" value="#ffffff" /></label><br><br>
+    <button class="neon-btn" onclick="changeColors()">Change & Download</button>
+    <div id="output" style="margin-top: 30px;"></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="color-changer.js"></script>
+</body>
+</html>
